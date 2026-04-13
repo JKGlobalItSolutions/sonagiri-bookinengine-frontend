@@ -180,128 +180,136 @@ const Home = () => {
 
   return (
     <div className="font-sans text-dark">
-      <section className="text-white text-center">
-        <div>
-          <div className="carousel-inner">
-            <div className="carousel-item active">
-              <div
-                className="d-flex align-items-center justify-content-center"
+    <section className="text-white text-center">
+  <div>
+    <div className="carousel-inner">
+      <div className="carousel-item active">
+        <div
+          className="d-flex align-items-center justify-content-center"
+          style={{
+            minHeight: "70vh",
+            backgroundImage: `url(${banner})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            position: "relative"
+          }}
+        >
+          {/* ✅ Overlay (fixed) */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "rgba(0,0,0,0.4)",
+              zIndex: 1
+            }}
+          ></div>
+
+          {/* ✅ Content */}
+          <div
+            className="position-relative px-3"
+            style={{ zIndex: 2, width: "100%", maxWidth: "900px" }}
+          >
+            <div
+              style={{
+                borderRadius: "20px",
+                padding: "30px 15px"
+              }}
+            >
+              {/* Heading */}
+              <h2
+                className="fw-bold mb-2"
                 style={{
-                  minHeight: "70vh",
-                  backgroundImage: `url(${banner})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  position: "relative"
+                  fontSize: "clamp(22px, 4vw, 40px)",
+                  textShadow: "0 2px 10px rgba(0,0,0,0.5)"
                 }}
               >
-                {/* Overlay */}
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    // background: "rgba(0,0,0,0.4)",
-                    // backdropFilter: "blur(30px)",
-                    zIndex: -1
-                  }}
-                ></div>
+                Your dream property starts here
+              </h2>
 
-                {/* Content */}
-                <div
-                  className="position-relative px-3"
-                  // style={{ zIndex: 2, width: "  100%", maxWidth: "1100px" }}
-                >
+              <p
+                className="mb-4"
+                style={{
+                  fontSize: "clamp(14px, 2.5vw, 22px)",
+                  textShadow: "0 2px 10px rgba(0,0,0,0.5)"
+                }}
+              >
+                Explore, Rent, Buy or Sell effortlessly
+              </p>
+
+              {/* ✅ SEARCH FORM */}
+              <form onSubmit={handleAdvancedSearch}>
+                <div className="d-flex justify-content-center px-2">
                   <div
+                    className="d-flex flex-column flex-md-row align-items-stretch align-items-md-center gap-2 p-2"
                     style={{
-                      // background: "rgba(255,255,255,0.15)",
-                      // backdropFilter: "blur(15px)",
-                      // border: "1px solid rgba(255,255,255,0.3)",
+                      background: "#fff",
                       borderRadius: "20px",
-                      padding: "30px 20px"
+                      boxShadow: "0 6px 20px rgba(0,0,0,0.2)",
+                      width: "100%",
+                      maxWidth: "700px"
                     }}
                   >
-                    {/* Heading */}
-                    <h2
-                      className="fw-bold mb-2"
+                    {/* Location */}
+                    <input
+                      type="text"
+                      name="location"
+                      value={searchData.location}
+                      onChange={handleSearchChange}
+                      placeholder="📍 Location"
+                      className="form-control border-0"
                       style={{
-                        fontSize: "clamp(22px, 4vw, 40px)"
+                        borderRadius: "50px",
+                        minWidth: "0",
+                        padding: "10px 15px"
+                      }}
+                    />
+
+                    {/* Type */}
+                    <select
+                      name="propertyType"
+                      value={searchData.propertyType}
+                      onChange={handleSearchChange}
+                      className="form-select border-0"
+                      style={{
+                        borderRadius: "50px",
+                        maxWidth: "160px",
+                        width: "100%",
+                        padding: "10px 15px"
                       }}
                     >
-                      Your dream property starts here
-                    </h2>
+                      <option value="">🏠 Type</option>
+                      <option>Apartment</option>
+                      <option>Villa</option>
+                      <option>Plot</option>
+                    </select>
 
-                    <p
-                      className="mb-4"
+                    {/* Button */}
+                    <button
+                      type="submit"
+                      className="btn px-4"
                       style={{
-                        fontSize: "clamp(14px, 2.5vw, 22px)"
+                        background: "#038A5E",
+                        color: "#fff",
+                        borderRadius: "50px",
+                        fontWeight: "600",
+                        whiteSpace: "nowrap",
+                        padding: "10px 20px",
+                        width: "100%"
                       }}
                     >
-                      Explore, Rent, Buy or Sell effortlessly
-                    </p>
-
-                   <form onSubmit={handleAdvancedSearch}>
-  <div className="d-flex justify-content-center">
-    
-    <div
-      className="d-flex flex-column flex-md-row align-items-center gap-2 p-2"
-      style={{
-        background: "#fff",
-        borderRadius: "50px",
-        boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
-        width: "100%",
-        maxWidth: "700px"   // 👈 இத தான் control
-      }}
-    >
-      {/* Location */}
-      <input
-        type="text"
-        name="location"
-        value={searchData.location}
-        onChange={handleSearchChange}
-        placeholder="Location"
-        className="form-control border-0"
-        style={{ borderRadius: "10px" }}
-      />
-
-      {/* Type */}
-      <select
-        name="propertyType"
-        value={searchData.propertyType}
-        onChange={handleSearchChange}
-        className="form-select border-0"
-        style={{ borderRadius: "50px", maxWidth: "150px" }}
-      >
-        <option value="">Type</option>
-        <option>Apartment</option>
-        <option>Villa</option>
-        <option>Plot</option>
-      </select>
-
-      {/* Button */}
-      <button
-        type="submit"
-        className="btn px-4"
-        style={{
-          background: "#038A5E",
-          color: "#fff",
-          borderRadius: "50px",
-          fontWeight: "600",
-          whiteSpace: "nowrap"
-        }}
-      >
-        Search
-      </button>
-    </div>
-
-  </div>
-</form>
-
+                       Search
+                    </button>
                   </div>
                 </div>
-              </div>
+              </form>
+              {/* END FORM */}
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 
