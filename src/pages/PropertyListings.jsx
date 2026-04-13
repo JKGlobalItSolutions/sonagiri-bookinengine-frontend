@@ -50,63 +50,47 @@ const PropertyListings = () => {
     fetchData();
   }, []);
 
-  // Dynamic filtering effect with debounce
+  // Dynamic filtering effect with debounce - ONLY location filtering per requirement
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       const filtered = properties.filter((property) => {
-        return (
-          (searchFilters.location === "" ||
-            property.location?.area
-              ?.toLowerCase()
-              .includes(searchFilters.location.toLowerCase()) ||
-            property.location?.city
-              ?.toLowerCase()
-              .includes(searchFilters.location.toLowerCase())) &&
-          (searchFilters.category === "" ||
-            property.propertyType
-              .toLowerCase()
-              .includes(searchFilters.category.toLowerCase())) &&
-          (searchFilters.type === "" ||
-            property.status
-              .toLowerCase()
-              .includes(searchFilters.type.toLowerCase())) &&
-          (searchFilters.minBeds === "" ||
-            property.bedrooms >= parseInt(searchFilters.minBeds || 0)) &&
-          (searchFilters.minBaths === "" ||
-            property.bathrooms >= parseInt(searchFilters.minBaths || 0))
-        );
+        // If no location filter, show all properties
+        if (searchFilters.location === "") {
+          return true;
+        }
+        
+        // Safe null checks, case-insensitive match
+        const searchValue = searchFilters.location.toLowerCase();
+        const area = (property.location?.area || "").toLowerCase();
+        const city = (property.location?.city || "").toLowerCase();
+        
+        // Match if either area OR city includes the search value
+        return area.includes(searchValue) || city.includes(searchValue);
       });
+      
       setFilteredProperties(filtered);
     }, 300); // 300ms debounce delay
 
     return () => clearTimeout(timeoutId);
-  }, [searchFilters, properties]);
+  }, [searchFilters.location, properties]);
 
   const handleSearch = (e) => {
     e.preventDefault();
     const filtered = properties.filter((property) => {
-      return (
-        (searchFilters.location === "" ||
-          property.location?.area
-            ?.toLowerCase()
-            .includes(searchFilters.location.toLowerCase()) ||
-          property.location?.city
-            ?.toLowerCase()
-            .includes(searchFilters.location.toLowerCase())) &&
-        (searchFilters.category === "" ||
-          property.propertyType
-            .toLowerCase()
-            .includes(searchFilters.category.toLowerCase())) &&
-        (searchFilters.type === "" ||
-          property.status
-            .toLowerCase()
-            .includes(searchFilters.type.toLowerCase())) &&
-        (searchFilters.minBeds === "" ||
-          property.bedrooms >= parseInt(searchFilters.minBeds)) &&
-        (searchFilters.minBaths === "" ||
-          property.bathrooms >= parseInt(searchFilters.minBaths))
-      );
+      // If no location filter, show all properties
+      if (searchFilters.location === "") {
+        return true;
+      }
+      
+      // Safe null checks, case-insensitive match
+      const searchValue = searchFilters.location.toLowerCase();
+      const area = (property.location?.area || "").toLowerCase();
+      const city = (property.location?.city || "").toLowerCase();
+      
+      // Match if either area OR city includes the search value
+      return area.includes(searchValue) || city.includes(searchValue);
     });
+    
     setFilteredProperties(filtered);
   };
 
@@ -132,24 +116,19 @@ const PropertyListings = () => {
 
   const location = useLocation();
 
-  // Parse URL query parameters and apply filters
+  // Parse URL query parameters and apply filters - ONLY use location per requirement
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const locationParam = urlParams.get('location') || "";
-    const categoryParam = urlParams.get('category') || "";
-    const typeParam = urlParams.get('type') || "";
-    const minBedsParam = urlParams.get('minBeds') || "";
-    const minBathsParam = urlParams.get('minBaths') || "";
-
-    if (locationParam || categoryParam || typeParam || minBedsParam || minBathsParam) {
-      setSearchFilters({
-        location: locationParam,
-        category: categoryParam,
-        type: typeParam,
-        minBeds: minBedsParam,
-        minBaths: minBathsParam,
-      });
-    }
+    
+    // All other parameters (category, type, etc.) are intentionally ignored
+    setSearchFilters({
+      location: locationParam,
+      category: "",
+      type: "",
+      minBeds: "",
+      minBaths: "",
+    });
   }, [location.search]);
 
   // This will be true when path is "/"

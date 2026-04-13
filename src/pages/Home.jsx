@@ -76,7 +76,7 @@ const Home = () => {
   const handleAdvancedSearch = (e) => {
     e.preventDefault();
     
-    // Create URL search parameters with only location and property type
+    // Create URL search parameters with ONLY location (ignore property type completely)
     const params = new URLSearchParams();
     
     // Only add location if it has a value
@@ -84,10 +84,7 @@ const Home = () => {
       params.append('location', searchData.location.trim());
     }
     
-    // Only add category (propertyType) if it has a value
-    if (searchData.propertyType.trim()) {
-      params.append('category', searchData.propertyType.trim());
-    }
+    // Property Type is NOT sent - intentionally ignored as per requirement
     
     // Build the target URL
     const targetUrl = params.toString() 
