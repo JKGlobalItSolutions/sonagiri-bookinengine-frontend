@@ -92,7 +92,7 @@ const Footer = () => {
                 lineHeight: "1.4",
               }}
             >
-              Sonagiri Property <br />
+              Sonachala Square Property <br />
               Management Company
             </p>
           </div>
@@ -102,7 +102,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="border-top border-light mt-4 pt-3 text-center">
           <p className="mb-0" style={{ fontSize: "14px" }}>
-            © 2025 Sonagiri | All rights reserved |{" "}
+            © 2025 Sonachala Square | All rights reserved |{" "}
             <a href="#" className="text-white text-decoration-none">
               Terms & Conditions
             </a>
