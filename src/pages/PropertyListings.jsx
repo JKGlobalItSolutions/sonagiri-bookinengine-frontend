@@ -58,16 +58,16 @@ const PropertyListings = () => {
         if (searchFilters.location === "") {
           return true;
         }
-        
+
         // Safe null checks, case-insensitive match
         const searchValue = searchFilters.location.toLowerCase();
         const area = (property.location?.area || "").toLowerCase();
         const city = (property.location?.city || "").toLowerCase();
-        
+
         // Match if either area OR city includes the search value
         return area.includes(searchValue) || city.includes(searchValue);
       });
-      
+
       setFilteredProperties(filtered);
     }, 300); // 300ms debounce delay
 
@@ -81,16 +81,16 @@ const PropertyListings = () => {
       if (searchFilters.location === "") {
         return true;
       }
-      
+
       // Safe null checks, case-insensitive match
       const searchValue = searchFilters.location.toLowerCase();
       const area = (property.location?.area || "").toLowerCase();
       const city = (property.location?.city || "").toLowerCase();
-      
+
       // Match if either area OR city includes the search value
       return area.includes(searchValue) || city.includes(searchValue);
     });
-    
+
     setFilteredProperties(filtered);
   };
 
@@ -120,7 +120,7 @@ const PropertyListings = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const locationParam = urlParams.get('location') || "";
-    
+
     // All other parameters (category, type, etc.) are intentionally ignored
     setSearchFilters({
       location: locationParam,
@@ -156,7 +156,7 @@ const PropertyListings = () => {
 
 
 
-            <div className="row">
+           <div className="row">
   {filteredProperties.map((property) => (
     <div
       key={property._id}
@@ -165,32 +165,59 @@ const PropertyListings = () => {
       style={{ cursor: "pointer" }}
     >
       <div
-        className="d-flex"
+        className="d-flex flex-column flex-md-row"
         style={{
           background: "#fff",
           borderRadius: "16px",
           overflow: "hidden",
           boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
           transition: "all 0.3s ease",
+          position: "relative", // ✅ for price
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = "translateY(-4px)";
-          e.currentTarget.style.boxShadow = "0 10px 25px rgba(0,0,0,0.15)";
+          e.currentTarget.style.boxShadow =
+            "0 10px 25px rgba(0,0,0,0.15)";
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = "translateY(0)";
-          e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)";
+          e.currentTarget.style.boxShadow =
+            "0 4px 12px rgba(0,0,0,0.1)";
         }}
       >
-        {/* LEFT IMAGE (same logic) */}
-        <div className="position-relative" style={{ width: "260px", minWidth: "260px" }}>
+        {/* ✅ PRICE (TOP RIGHT) */}
+        <span
+        className="price-mobile"
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            background: "linear-gradient(45deg, #ffdf7e, #ffc107)",
+            color: "#333",
+            padding: "6px 14px",
+            borderRadius: "20px",
+            fontSize: "15px",
+            fontWeight: 600,
+            zIndex: 10,
+          }}
+        >
+          ₹{property.price || 0}
+        </span>
+
+        {/* ✅ IMAGE */}
+        <div
+          className="position-relative property-card-image"
+          style={{
+            width: "260px",
+            minWidth: "260px",
+          }}
+        >
           <img
             src={
               property.imageUrls?.length > 0
-                ? (property.imageUrls[0].startsWith("http://") ||
-                  property.imageUrls[0].startsWith("https://")
+                ? property.imageUrls[0].startsWith("http")
                   ? property.imageUrls[0]
-                  : `${import.meta.env.VITE_API_BASE_URL}${property.imageUrls[0]}`)
+                  : `${import.meta.env.VITE_API_BASE_URL}${property.imageUrls[0]}`
                 : "https://via.placeholder.com/400x230?text=No+Image"
             }
             alt={property.title || "Property Image"}
@@ -201,7 +228,7 @@ const PropertyListings = () => {
             }}
           />
 
-          {/* SAME BADGES */}
+          {/* PROPERTY TYPE */}
           <span
             style={{
               position: "absolute",
@@ -218,8 +245,8 @@ const PropertyListings = () => {
             {property.propertyType || "Flat"}
           </span>
 
-
- <span
+          {/* STATUS */}
+          <span
             style={{
               position: "absolute",
               bottom: "10px",
@@ -234,12 +261,10 @@ const PropertyListings = () => {
           >
             {property.status || "Rent"}
           </span>
-         
         </div>
 
-        {/* RIGHT CONTENT (same data, new layout) */}
+        {/* ✅ CONTENT */}
         <div className="flex-grow-1 p-3 d-flex flex-column justify-content-between">
-          
           {/* TOP */}
           <div>
             <h5 style={{ fontWeight: 700, marginBottom: "6px" }}>
@@ -252,7 +277,8 @@ const PropertyListings = () => {
 
             <ul className="list-unstyled small text-muted mb-2">
               <li>
-                📏 {property.sizeSqFt} sq ft | 🛏 {property.bedrooms} BR | 🚿 {property.bathrooms} Bath
+                📏 {property.sizeSqFt} sq ft | 🛏 {property.bedrooms} BR | 🚿{" "}
+                {property.bathrooms} Bath
               </li>
               <li>
                 🏢 {property.floor} | 🌅 {property.facing}
@@ -261,45 +287,17 @@ const PropertyListings = () => {
           </div>
 
           {/* BOTTOM */}
-          <div className="d-flex justify-content-between align-items-center">
+          <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
             <p className="small text-muted mb-0">
               Available:{" "}
               {property.availabilityDate
                 ? new Date(property.availabilityDate).toLocaleDateString()
                 : "N/A"}
             </p>
-            
-<div style={{ 
-  
-  // position: "absolute",
-              // top: "10px",
-              // right: "10px",
-              }}
-              >
-         
-
-
-<span
-            style={{
-             
-              background: "linear-gradient(45deg, #ff416c, #ff4b2b)",
-              color: "#fff",
-              padding: "6px 14px",
-              borderRadius: "20px",
-              fontSize: "15px",
-              fontWeight: 600,
-            }}
-          >
-            ₹{property.price || 0}
-          </span>
-
-
-</div>
-
 
             <button
               className="btn btn-sm"
-              onClick={(e) => e.stopPropagation()} // 🔥 important
+              onClick={(e) => e.stopPropagation()}
               style={{
                 background: "linear-gradient(45deg, #ff4b2b, #ff416c)",
                 color: "#fff",

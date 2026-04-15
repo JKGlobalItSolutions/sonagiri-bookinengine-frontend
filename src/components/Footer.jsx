@@ -62,7 +62,8 @@ const Footer = () => {
             </div>
 
             <p className="text-light mb-2">
-              Annai Parvathi Nagar, Vengikkal, Tiruvannamalai, Tamil Nadu 606604
+              <strong >Registered Address:</strong>{" "}
+                  Hrify Technologies Pvt Ltd - Annai Parvathi Nagar, Vengikkal, Tiruvannamalai, Tamil Nadu 606604
             </p>
 
             <p className="d-flex align-items-center gap-2 text-light mb-2">

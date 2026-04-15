@@ -141,7 +141,7 @@ const Contact = () => {
               <ul className="list-unstyled fs-5">
                 <li className="mb-3">
                   <strong style={{ color: "#038A5E" }}>📍 Registered Address:</strong>{" "}
-                  Hrify Technologies - Annai Parvathi Nagar, Vengikkal, Tiruvannamalai, Tamil Nadu 606604
+                  Hrify Technologies Pvt Ltd - Annai Parvathi Nagar, Vengikkal, Tiruvannamalai, Tamil Nadu 606604
                 </li>
                 <li className="mb-3">
                   <strong style={{ color: "#038A5E" }}>📞 Phone:</strong> +91
