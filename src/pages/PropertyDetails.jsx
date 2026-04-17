@@ -79,10 +79,10 @@ const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/properties
 
     emailjs
       .send(
-        "service_emvfrmo",
-        "template_szxp2yc",
+        "service_npeqjzm",
+        "template_gslupvu",
         emailData,
-        "2K-8VzSS5KV80UWSh"
+        "Q7Q475cnO7gwnp8YK"
       )
       .then(
         (result) => {
